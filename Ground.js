@@ -14,6 +14,6 @@ class Ground {
         let pos = this.body.position;
         rectMode(CENTER);
         fill("brown");
-        rect(pos.x, pos.y, this.width, this.h);
+        rect(pos.x, pos.y, this.width, this.height);
     }
 }

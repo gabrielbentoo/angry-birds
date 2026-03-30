@@ -7,6 +7,7 @@ let world;
 let canvas;
 let backgroundImg;
 let ground;
+let platform
 
 function preload() {
     backgroundImg = loadImage("./assets/bg.png");
@@ -18,12 +19,14 @@ function setup() {
     engine = Engine.create();
     world = engine.world;
     ground = new Ground(600, height, 1200, 20);
+    platform = new Ground(150, 305, 300, 170);
 }
 
 function draw() {
     background(backgroundImg);
-    
+
     ground.display();
+    platform.display();
 
 }
 
