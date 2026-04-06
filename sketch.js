@@ -21,6 +21,10 @@ let log3;
 let log4;
 let bird1, bird2, bird3, bird4;
 let birds = [];
+let slingshot;
+let gameState = "onSling";
+let score = 0;
+
 
 function preload() {
     backgroundImg = loadImage("./assets/bg.png");
@@ -49,7 +53,7 @@ function setup() {
     //teto dos inimigos
     box5 = new Box(810, 160, 70, 70);
     log3 = new Log(760, 120, 150, PI /7);
-    log4 = new Log(870, 120, 150, PI /7);
+    log4 = new Log(870, 120, 150, -PI /7);
 
     //birds
     bird1 = new Bird(200, 50);
@@ -61,11 +65,28 @@ function setup() {
     birds.push(bird3);
     birds.push(bird2);
     birds.push(bird1);
+    
+
+    slingshot = new Slingshot(bird1.body, {x:200, y:50});
+
 
 }
 
 function draw() {
     background(backgroundImg);
+    noStroke();
+    textFont("Impact");
+    textSize(20);
+    fill("red");
+    text("Score: " + score,  width -300, 20);
+    if(birds.length > 0){
+        text("Press space key for next bird", width /2 -200, 25);
+        text("Bird: " + birds.length, width /2 -100, 60);
+
+    }
+    else{
+        text("click on reload button to reload the game level", width /2 -200, 70);
+    }
 
     ground.display();
     platform.display();
@@ -92,5 +113,21 @@ function draw() {
     bird3.display();
     bird4.display();
 
+    slingshot.display();
 }
 
+function mouseDragged() {
+        if(gameState !== "launched") {
+            Matter.Body.setPosition(birds[birds.length -1].body, {x: mouseX, y: mouseY});
+            Matter.Body.applyForce(birds[birds.length -1].body, birds[birds.length -1].body.position, {x: 5, y: -5});
+            return false;
+        }
+
+}
+
+function mouseReleased() {
+    slingshot.fly();
+    birds.pop();
+    gameState = "launched";
+    return false;
+}
