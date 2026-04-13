@@ -64,13 +64,13 @@ function setup() {
     //segundo andar
     box3 = new Box(700, 240, 70, 70);
     box4 = new Box(920, 240, 70, 70);
-    pig2 = new Pig(810, 260);
-    log2 = new Log(810, 180, 300, PI /2);
+    pig2 = new Pig(810, 226);
+    log2 = new Log(810, 130, 300, PI /2);
 
     //teto dos inimigos
-    box5 = new Box(810, 160, 70, 70);
-    log3 = new Log(760, 120, 150, PI /10);
-    log4 = new Log(870, 120, 150, -PI /10);
+    box5 = new Box(810, 100, 70, 70);
+    log3 = new Log(760, 70, 150, PI /10);
+    log4 = new Log(870, 70, 150, -PI /10);
 
     //birds
     bird1 = new Bird(200, 50);
@@ -141,7 +141,6 @@ function mouseDragged() {
             let currentBird = birds[birds.length -1];
             Matter.Body.setPosition(currentBird.body, {x: mouseX, y: mouseY});
             // Matter.Body.applyForce(birds[birds.length -1].body, birds[birds.length -1].body.position, {x: 5, y: -5});
-            birdSelectSound.play();
             return false; 
         }
 
@@ -161,7 +160,7 @@ function mouseReleased() {
 function keyPressed() {
     if(keyCode === 32 && gameState === "launched" && birds.length > 0) {
         let currentBird = birds[birds.length -1];
-        Matter.body.setPosition(currentBird.body, { x: 200, y: 50});
+        Matter.Body.setPosition(currentBird.body, { x: 200, y: 50});
         slingshot.attach(currentBird.body);
         gameState = "onSling";
         birdSelectSound.play();
@@ -177,4 +176,10 @@ function getBackgroundImg() {
         bg = "assets/bg2.jpg";
     }
     backgroundImg = loadImage(bg);
+}
+
+function mousePressed() {
+    if(gameState !== "launched" && birds.length > 0) {
+            birdSelectSound.play();
+        }
 }
